@@ -10,7 +10,7 @@ def createOpenVINODirPath():
     key=winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE,r"SYSTEM\CurrentControlSet\Control\Session Manager\Environment")
     winreg.SetValueEx(key,"ZeroMQ_DIR",0,winreg.REG_SZ,LIB_DIR_Path)
     winreg.CloseKey(key)
-    print("create INTEL_OPENVINO_DIR done")
+    print("create dir done")
     return
 
 if __name__=="__main__":
