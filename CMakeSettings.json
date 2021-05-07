@@ -4,9 +4,9 @@
       "name": "x64-Debug",
       "generator": "Ninja",
       "configurationType": "Debug",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
-      "buildRoot": "${projectDir}\\..\\ZeroMQPractice_out\\build\\${name}",
-      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "inheritEnvironments": [ "msvc_x64" ],
+      "buildRoot": "${projectDir}\\..\\ZeroMQPractice_VS_out\\build\\${name}",
+      "installRoot": "${projectDir}\\..\\ZeroMQPractice_VS_out\\install\\${name}",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
@@ -16,12 +16,12 @@
       "name": "x64-Release",
       "generator": "Ninja",
       "configurationType": "MinSizeRel",
-      "buildRoot": "${projectDir}\\..\\ZeroMQPractice_out\\build\\${name}",
-      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "buildRoot": "${projectDir}\\..\\ZeroMQPractice_VS_out\\build\\${name}",
+      "installRoot": "${projectDir}\\..\\ZeroMQPractice_VS_out\\install\\${name}",
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "inheritEnvironments": [ "msvc_x64" ],
       "variables": []
     }
   ]
