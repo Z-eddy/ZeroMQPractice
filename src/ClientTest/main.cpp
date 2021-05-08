@@ -1,30 +1,27 @@
 ﻿#include <iostream>
 #include <string>
-#include <zmq.hpp>
+
+#include "zmq.hpp"
+#include "zmq_addon.hpp"
 
 int main() {
   // initialize the zmq context with a single IO thread
   zmq::context_t context{1};
 
   // construct a REQ (request) socket and connect to interface
-  zmq::socket_t socket{context, zmq::socket_type::req};
-  socket.connect("tcp://localhost:5555");
+  zmq::socket_t socket{context, zmq::socket_type::sub};
+  socket.connect("tcp://192.168.0.13:9092");
+  socket.set(zmq::sockopt::subscribe, "");
 
-  // set up some static data to send
-  const std::string data{"Hello"};
+  while (true) {
+    // Receive all parts of the message
+    std::vector<zmq::message_t> recv_msgs;
+    zmq::recv_result_t result =
+        zmq::recv_multipart(socket, std::back_inserter(recv_msgs));
 
-  for (auto request_num = 0; request_num < 10; ++request_num) {
-    // send the request message
-    std::cout << "Sending Hello " << request_num << "..." << std::endl;
-    socket.send(zmq::buffer(data), zmq::send_flags::none);
-
-    // wait for reply from server
-    zmq::message_t reply{};
-    socket.recv(reply, zmq::recv_flags::none);
-
-    std::cout << "Received " << reply.to_string();
-    std::cout << " (" << request_num << ")";
-    std::cout << std::endl;
+    for (const auto &item : recv_msgs) {
+      std::cout << item.to_string() << std::endl;
+    }
   }
 
   return 0;
