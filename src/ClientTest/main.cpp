@@ -12,9 +12,9 @@ using namespace EmployeeTest;
 int main() {
   //发送的数据
   EmployeeTest::Employee myData;
-  myData.set_id(0);
-  myData.set_age(16);
-  myData.set_name("my employee name");
+  myData.set_id(918);
+  myData.set_age(30);
+  myData.set_name("test wang yi yun");
   //序列化
   auto tempData{myData.SerializeAsString()};
   cout << "the serialize data size:" << tempData.size() << endl;
@@ -38,7 +38,8 @@ int main() {
   for (auto request_num = 0; request_num < 10; ++request_num) {
     // send the request message
     std::cout << "Sending Hello " << request_num << "..." << std::endl;
-    socket.send(zmq::buffer(data), zmq::send_flags::none);
+    //socket.send(zmq::buffer(data), zmq::send_flags::none);
+    socket.send(zmq::buffer(tempData), zmq::send_flags::none);
 
     // wait for reply from server
     zmq::message_t reply{};
