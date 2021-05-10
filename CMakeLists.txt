@@ -4,7 +4,6 @@ project(ZeroMQPractice)
 
 
 set(ZeroMQ_DIR $ENV{ZeroMQ_DIR})
-message(xxxxxxxxxxxxxxxx${ZeroMQ_DIR})
 find_package(ZeroMQ REQUIRED)
 
 SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install/${CMAKE_BUILD_TYPE})

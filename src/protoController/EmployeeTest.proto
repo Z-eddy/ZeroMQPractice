@@ -1,0 +1,16 @@
+syntax="proto3";
+
+//
+package EmployeeTest;
+
+option go_package="./EmployeeTestpb";
+
+message Employee{
+    int32 id=1;
+    int32 age=2;
+    string name=3;
+    repeated string otherName=4;
+
+    reserved 10,20 to 100,200 to max;
+    reserved "tempName";
+}

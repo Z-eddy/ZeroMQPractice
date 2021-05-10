@@ -12,6 +12,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB SourceFiles ${SourceFiles})
 
+include($ENV{gRPC_DIR}/gRPCcommon.cmake)
+include_directories(${CMAKE_BINARY_DIR}/protocCompiledFiles)
 
 add_executable(${PROJECT_NAME}
   ${SourceFiles}
@@ -23,4 +25,4 @@ LIBRARY DESTINATION lib
 ARCHIVE DESTINATION libstatic
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE libzmq)
+target_link_libraries(${PROJECT_NAME} PRIVATE protoController ${gRPCAllLibs} libzmq)
