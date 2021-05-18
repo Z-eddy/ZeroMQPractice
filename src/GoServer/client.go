@@ -1,9 +1,11 @@
 package main
 
 import (
-"fmt"
-
-zmq "github.com/pebbe/zmq4"
+	"MyTest/EmployeeTestpb"
+	"MyTest/TrZeroMQMsgpb"
+	"fmt"
+	"github.com/golang/protobuf/proto"
+	zmq "github.com/pebbe/zmq4"
 )
 
 func main() {
@@ -12,14 +14,23 @@ func main() {
 	// Socket to talk to server
 	fmt.Printf("Connecting to the server...\n")
 	s, _ := zctx.NewSocket(zmq.REQ)
-	s.Connect("tcp://localhost:5555")
+	s.Connect("tcp://localhost:9527")
 
-	// Do 10 requests, waiting each time for a response
-	for i := 0; i < 10; i++ {
-		fmt.Printf("Sending request %d...\n", i)
-		s.Send("Hello", 0)
-
-		msg, _ := s.Recv(0)
-		fmt.Printf("Recieved reply %d [ %s ]\n", i, msg)
+	theData := EmployeeTestpb.Employee{
+		Id:   12,
+		Age:  78,
+		Name: "WangYiYun",
 	}
+	rawData, _ := proto.Marshal(&theData)
+
+	topData := TrZeroMQMsgpb.TopData{
+		Type:    "Employee",
+		RawData: rawData,
+	}
+
+	sendData, _ := proto.Marshal(&topData)
+
+	s.SendBytes(sendData, 0)
+	msg, _ := s.Recv(0)
+	fmt.Println(msg)
 }
