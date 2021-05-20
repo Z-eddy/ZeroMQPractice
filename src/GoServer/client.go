@@ -1,7 +1,9 @@
 package main
 
 import (
+	"MyTest/BaseDatapb"
 	"fmt"
+	"github.com/golang/protobuf/proto"
 	zmq "github.com/pebbe/zmq4"
 )
 
@@ -15,12 +17,12 @@ func main() {
 	s.Connect("tcp://localhost:9526")
 
 	s.SetSubscribe("AA")
-	s.SetSubscribe("BB")
+	s.SetSubscribe("LogMsg")
 
 	for {
 		msg, _ := s.RecvMessage(0)
-		for idx, str := range msg {
-			fmt.Println(idx, str)
-		}
+		theData := BaseDatapb.LogData{}
+		proto.Unmarshal([]byte(msg[1]), &theData)
+		fmt.Println(theData.GetType(), string(theData.GetMsg()))
 	}
 }
