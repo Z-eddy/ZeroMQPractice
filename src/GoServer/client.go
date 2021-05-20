@@ -1,10 +1,7 @@
 package main
 
 import (
-	"MyTest/EmployeeTestpb"
-	"MyTest/TrZeroMQMsgpb"
 	"fmt"
-	"github.com/golang/protobuf/proto"
 	zmq "github.com/pebbe/zmq4"
 )
 
@@ -13,24 +10,17 @@ func main() {
 
 	// Socket to talk to server
 	fmt.Printf("Connecting to the server...\n")
-	s, _ := zctx.NewSocket(zmq.REQ)
-	s.Connect("tcp://localhost:9527")
+	s, _ := zctx.NewSocket(zmq.SUB)
+	defer s.Close()
+	s.Connect("tcp://localhost:9526")
 
-	theData := EmployeeTestpb.Employee{
-		Id:   12,
-		Age:  78,
-		Name: "WangYiYun",
+	s.SetSubscribe("AA")
+	s.SetSubscribe("BB")
+
+	for {
+		msg, _ := s.RecvMessage(0)
+		for idx, str := range msg {
+			fmt.Println(idx, str)
+		}
 	}
-	rawData, _ := proto.Marshal(&theData)
-
-	topData := TrZeroMQMsgpb.TopData{
-		Type:    "Employee",
-		RawData: rawData,
-	}
-
-	sendData, _ := proto.Marshal(&topData)
-
-	s.SendBytes(sendData, 0)
-	msg, _ := s.Recv(0)
-	fmt.Println(msg)
 }
