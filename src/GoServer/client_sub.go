@@ -13,9 +13,9 @@ func main() {
 
 	// Socket to talk to server
 	fmt.Printf("Connecting to the server...\n")
-	s, _ := zctx.NewSocket(zmq.SUB)
-	defer s.Close()
-	err:=s.Connect("tcp://localhost:9526")
+	s1, _ := zctx.NewSocket(zmq.SUB)
+	defer s1.Close()
+	err:= s1.Connect("tcp://localhost:9526")
 	if err!=nil{
 		fmt.Println(err)
 		os.Exit(0)
@@ -23,11 +23,11 @@ func main() {
 		fmt.Println("success connected")
 	}
 
-	s.SetSubscribe("")
-	//s.SetSubscribe("LogMsg")
+	s1.SetSubscribe("")
+	//s1.SetSubscribe("LogMsg")
 
 	for {
-		msg, _ := s.RecvMessage(0)
+		msg, _ := s1.RecvMessage(0)
 		theData := BaseDatapb.LogData{}
 		proto.Unmarshal([]byte(msg[1]), &theData)
 		fmt.Println(theData.GetType(), string(theData.GetMsg()))

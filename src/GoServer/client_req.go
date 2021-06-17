@@ -1,8 +1,8 @@
 package main
 
 import (
+	"MyTest/BaseDatapb"
 	"MyTest/EmployeeTestpb"
-	"MyTest/TrZeroMQMsgpb"
 	"fmt"
 	"github.com/golang/protobuf/proto"
 	zmq "github.com/pebbe/zmq4"
@@ -25,7 +25,7 @@ func main() {
 		}
 		rawData, _ := proto.Marshal(&theData)
 
-		topData := TrZeroMQMsgpb.TopData{
+		topData := BaseDatapb.TopData{
 			Type:    "Employee",
 			RawData: rawData,
 		}
@@ -36,6 +36,6 @@ func main() {
 		msg, _ := s.Recv(0)
 		fmt.Println(msg)
 
-		time.Sleep(2000*time.Millisecond)
+		time.Sleep(2000 * time.Millisecond)
 	}
 }
