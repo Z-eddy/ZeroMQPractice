@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/golang/protobuf/proto"
 	zmq "github.com/pebbe/zmq4"
+	"os"
 )
 
 func main() {
@@ -14,10 +15,16 @@ func main() {
 	fmt.Printf("Connecting to the server...\n")
 	s, _ := zctx.NewSocket(zmq.SUB)
 	defer s.Close()
-	s.Connect("tcp://localhost:9526")
+	err:=s.Connect("tcp://localhost:9526")
+	if err!=nil{
+		fmt.Println(err)
+		os.Exit(0)
+	}else{
+		fmt.Println("success connected")
+	}
 
-	s.SetSubscribe("AA")
-	s.SetSubscribe("LogMsg")
+	s.SetSubscribe("")
+	//s.SetSubscribe("LogMsg")
 
 	for {
 		msg, _ := s.RecvMessage(0)
