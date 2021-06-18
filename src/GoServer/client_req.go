@@ -15,7 +15,7 @@ func main() {
 	// Socket to talk to server
 	fmt.Printf("Connecting to the server...\n")
 	s, _ := zctx.NewSocket(zmq.REQ)
-	s.Connect("tcp://localhost:9527")
+	s.Connect("tcp://192.168.0.144:9527")
 
 	for {
 		theData := EmployeeTestpb.Employee{
@@ -32,9 +32,11 @@ func main() {
 
 		sendData, _ := proto.Marshal(&topData)
 
-		s.SendBytes(sendData, 0)
-		msg, _ := s.Recv(0)
-		fmt.Println(msg)
+		val, _ := s.SendBytes(sendData, 0)
+		t, err := s.GetType()
+		fmt.Println(val, t, err)
+		s.Recv(0)
+		//fmt.Println(msg)
 
 		time.Sleep(2000 * time.Millisecond)
 	}

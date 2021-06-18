@@ -62,7 +62,7 @@ func init() {
 
 	//S0
 	S0, _ = Zctx0.NewSocket(zmq.REQ)
-	err := S0.Connect("tcp://localhost:9527")
+	err := S0.Connect("tcp://192.168.0.181:9527")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(0)
@@ -72,7 +72,7 @@ func init() {
 
 	//S1
 	S1, _ = Zctx0.NewSocket(zmq.SUB)
-	err = S1.Connect("tcp://localhost:9526")
+	err = S1.Connect("tcp://192.168.0.181:9526")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(0)
